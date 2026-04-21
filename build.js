@@ -80,10 +80,59 @@ function buildTrustBadges() {
 </div>`).join('\n');
 }
 
+// --- Helper: build service modal data ---
+function buildServiceModals() {
+  return config.services.primary.map((s, i) => {
+    const details = (s.details || []).map(d =>
+      `<li class="flex items-start gap-3 text-sm text-[${config.colors.textPrimary}]">
+        <span class="material-symbols-outlined text-[${config.colors.primaryAccent}] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        ${d}
+      </li>`
+    ).join('\n');
+    return `
+<div id="service-modal-${i}" class="service-modal-overlay" role="dialog" aria-modal="true" aria-label="${s.title}">
+  <div class="service-modal">
+    <div class="relative h-52 overflow-hidden">
+      <img src="${s.image}" alt="${s.imageAlt}" class="w-full h-full object-cover"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-6 flex items-end gap-4">
+        <span class="material-symbols-outlined text-[${config.colors.primaryAccent}] text-4xl" style="font-variation-settings:'FILL' 1;">${s.icon}</span>
+        <h3 class="text-white text-2xl font-headline font-extrabold uppercase">${s.title}</h3>
+      </div>
+      <button class="modal-close absolute top-4 right-4 w-10 h-10 bg-black/50 text-white flex items-center justify-center hover:bg-black/80 transition-colors" aria-label="Close dialog">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-8">
+      <p class="text-[${config.colors.textPrimary}] mb-6 leading-relaxed">${s.description}</p>
+      ${details ? `<ul class="space-y-3 mb-8">${details}</ul>` : ''}
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="${s.linkHref.replace('{{PHONE_TEL}}', config.phone.tel)}" class="golden-gradient text-[#261a00] px-6 py-3 font-headline font-bold uppercase tracking-wider text-sm text-center hover:-translate-y-0.5 transition-transform duration-200 flex-1 flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">call</span>
+          Call Now — Free Estimate
+        </a>
+        <a href="#contact" class="border-2 border-[${config.colors.navy}] text-[${config.colors.navy}] px-6 py-3 font-headline font-bold uppercase tracking-wider text-sm text-center hover:bg-[${config.colors.navy}] hover:text-white transition-colors duration-200 flex-1 flex items-center justify-center modal-close">
+          Book Online
+        </a>
+      </div>
+    </div>
+  </div>
+</div>`;
+  }).join('\n');
+}
+
 // --- Helper: build primary service cards ---
 function buildPrimaryServices() {
-  return config.services.primary.map(s => {
+  return config.services.primary.map((s, i) => {
+    const isCallNow = s.linkText && s.linkText.toLowerCase().includes('call');
     const href = s.linkHref.replace('{{PHONE_TEL}}', config.phone.tel);
+    const actionBtn = isCallNow
+      ? `<a class="text-[${config.colors.primaryAccent}] font-headline font-bold text-[0.65rem] tracking-widest uppercase flex items-center gap-2 min-h-[44px]" href="${href}">
+          ${s.linkText} <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
+         </a>`
+      : `<button class="text-[${config.colors.primaryAccent}] font-headline font-bold text-[0.65rem] tracking-widest uppercase flex items-center gap-2 min-h-[44px] open-service-modal" data-modal="service-modal-${i}" aria-label="Learn more about ${s.title}">
+          ${s.linkText} <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
+         </button>`;
     return `
 <div class="group relative aspect-[4/5] overflow-hidden bg-surface-container-highest">
 <img alt="${s.imageAlt}" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" src="${s.image}"/>
@@ -92,9 +141,7 @@ function buildPrimaryServices() {
 <span class="material-symbols-outlined text-[${config.colors.primaryAccent}] text-4xl mb-4" aria-hidden="true">${s.icon}</span>
 <h3 class="text-2xl font-headline font-extrabold text-white uppercase mb-2">${s.title}</h3>
 <p class="text-white/70 text-sm mb-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">${s.description}</p>
-<a class="text-[${config.colors.primaryAccent}] font-headline font-bold text-[0.65rem] tracking-widest uppercase flex items-center gap-2 min-h-[44px]" href="${href}">
-${s.linkText} <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
-</a>
+${actionBtn}
 </div>
 </div>`;
   }).join('\n');
@@ -325,6 +372,42 @@ const html = `<!DOCTYPE html>
       .urgent-pulse {
         animation: urgentPulse 2s ease-in-out infinite;
       }
+      /* Marquee Animation for Trust Badges */
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-marquee {
+        animation: marquee 30s linear infinite;
+        display: inline-flex;
+        width: max-content;
+      }
+      /* Service Modal */
+      .service-modal-overlay {
+        position: fixed; inset: 0; z-index: 9999;
+        background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+        display: flex; align-items: center; justify-content: center;
+        padding: 1rem; opacity: 0; pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .service-modal-overlay.open {
+        opacity: 1; pointer-events: all;
+      }
+      .service-modal {
+        background: #fff; max-width: 680px; width: 100%;
+        max-height: 90vh; overflow-y: auto;
+        transform: translateY(24px); transition: transform 0.3s ease;
+        position: relative;
+      }
+      .service-modal-overlay.open .service-modal {
+        transform: translateY(0);
+      }
+      /* Active nav link */
+      .nav-link-active {
+        color: ${config.colors.primaryAccent} !important;
+        border-bottom: 2px solid ${config.colors.primaryAccent};
+        padding-bottom: 4px;
+      }
     </style>
 <!-- Schema.org Structured Data -->
 <script type="application/ld+json">
@@ -356,14 +439,14 @@ ${buildSchema()}
 <a href="/" class="text-2xl font-black tracking-tighter text-[#000000] dark:text-white font-headline flex items-center" aria-label="${config.companyName} home">
                 ${buildNavLogo()}
             </a>
-<div class="hidden md:flex gap-8 items-center font-headline uppercase tracking-tight font-bold">
-<a class="text-[${config.colors.primaryAccent}] border-b-2 border-[${config.colors.primaryAccent}] pb-1 transition-colors duration-200" href="#services">Services</a>
-<a class="text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200" href="#reviews">Reviews</a>
-<a class="text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200" href="#service-areas">Service Areas</a>
-<a class="text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200" href="#contact">Contact</a>
+<div class="hidden lg:flex gap-8 items-center font-headline uppercase tracking-tight font-bold" id="desktop-nav">
+<a class="nav-link text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200" href="#services" data-section="services">Services</a>
+<a class="nav-link text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200" href="#reviews" data-section="reviews">Reviews</a>
+<a class="nav-link text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200" href="#service-areas" data-section="service-areas">Service Areas</a>
+<a class="nav-link text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200" href="#contact" data-section="contact">Contact</a>
 </div>
 <div class="flex items-center gap-4">
-<a href="tel:${config.phone.tel}" class="hidden lg:flex items-center gap-2 text-[${config.colors.navy}] font-headline font-bold text-sm min-h-[44px]" aria-label="Call ${config.phone.display}">
+<a href="tel:${config.phone.tel}" class="hidden xl:flex items-center gap-2 text-[${config.colors.navy}] font-headline font-bold text-sm min-h-[44px]" aria-label="Call ${config.phone.display}">
   <span class="material-symbols-outlined text-[${config.colors.primaryAccent}]" aria-hidden="true" style="font-variation-settings: 'FILL' 1;">call</span>
   ${config.phone.display}
 </a>
@@ -371,13 +454,13 @@ ${buildSchema()}
                     Get Free Estimate
                 </a>
 <!-- UI/UX: Mobile hamburger menu -->
-<button id="mobile-menu-toggle" class="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+<button id="mobile-menu-toggle" class="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
   <span class="material-symbols-outlined text-2xl text-[${config.colors.navy}]" aria-hidden="true">menu</span>
 </button>
 </div>
 </div>
 <!-- Mobile menu -->
-<div id="mobile-menu" class="hidden md:hidden bg-[${config.colors.surface}] border-t border-outline-variant/20 px-6 py-4" role="navigation" aria-label="Mobile navigation">
+<div id="mobile-menu" class="hidden lg:hidden bg-[${config.colors.surface}] border-t border-outline-variant/20 px-6 py-4" role="navigation" aria-label="Mobile navigation">
   <div class="flex flex-col gap-4 font-headline uppercase tracking-tight font-bold">
     <a class="text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200 py-2 min-h-[44px] flex items-center" href="#services">Services</a>
     <a class="text-[${config.colors.textSecondary}] hover:text-[${config.colors.primaryAccent}] transition-colors duration-200 py-2 min-h-[44px] flex items-center" href="#reviews">Reviews</a>
@@ -393,9 +476,9 @@ ${buildSchema()}
 
 <main id="main-content" class="pt-0">
 <!-- Hero Section -->
-<section class="relative min-h-[85vh] flex flex-col md:flex-row items-stretch overflow-hidden" aria-labelledby="hero-heading">
+<section class="relative min-h-[85vh] flex flex-col lg:flex-row items-stretch overflow-hidden" aria-labelledby="hero-heading">
 <!-- Left Side: Content -->
-<div class="flex-1 px-6 md:px-16 lg:px-24 py-16 flex flex-col justify-center bg-surface">
+<div class="flex-1 px-6 lg:px-16 xl:px-24 py-16 flex flex-col justify-center bg-surface">
 <div class="max-w-2xl">
 <span class="inline-block py-1 px-3 bg-secondary-container text-on-secondary-container text-[0.65rem] font-bold tracking-widest uppercase mb-6 rounded-sm">
                         ${config.heroSubBadge}
@@ -434,7 +517,7 @@ ${buildSchema()}
 </div>
 </div>
 <!-- Right Side: Contact Form -->
-<div class="flex-1 relative flex items-center justify-center p-6 md:p-16" id="contact">
+<div class="flex-1 relative flex items-center justify-center p-6 lg:p-16" id="contact">
 <!-- Background Image -->
 <div class="absolute inset-0 z-0" aria-hidden="true">
 <img alt="" class="w-full h-full object-cover grayscale opacity-10" src="${config.images.heroBackground}"/>
@@ -470,8 +553,9 @@ ${buildFormOptions()}
 </section>
 
 <!-- Trust Ribbon -->
-<section class="bg-surface-container-low py-10 px-6 border-y border-outline-variant/10" aria-label="Trust certifications">
-<div class="max-w-7xl mx-auto flex flex-wrap justify-center md:justify-between items-center gap-8 md:gap-12 opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500">
+<section class="bg-surface-container-low py-10 px-0 border-y border-outline-variant/10 overflow-hidden" aria-label="Trust certifications">
+<div class="animate-marquee opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 flex gap-16 pr-16 items-center">
+${buildTrustBadges()}
 ${buildTrustBadges()}
 </div>
 </section>
@@ -479,12 +563,12 @@ ${buildTrustBadges()}
 <!-- Service Grid -->
 <section id="services" class="py-20 md:py-24 px-6 md:px-8 bg-surface" aria-labelledby="services-heading">
 <div class="max-w-7xl mx-auto">
-<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-<div class="max-w-xl">
+<div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-8">
+<div class="max-w-xl text-center md:text-left">
 <span class="text-primary-fixed-dim font-headline font-bold uppercase tracking-[0.3em] text-xs">Our Services</span>
 <h2 id="services-heading" class="text-3xl md:text-5xl font-headline font-black text-primary mt-4 uppercase leading-none">Complete Plumbing <br/>Solutions</h2>
 </div>
-<p class="text-[${config.colors.textPrimary}] max-w-xs text-sm leading-relaxed">
+<p class="text-[${config.colors.textPrimary}] max-w-xs text-sm leading-relaxed text-center md:text-right">
                         We deploy advanced diagnostic equipment and precision craftsmanship to resolve the most complex plumbing challenges.
                     </p>
 </div>
@@ -529,59 +613,96 @@ ${buildReviewCards()}
 </div>
 </section>
 
-<!-- Service Area / Map -->
+<!-- Service Area -->
 <section id="service-areas" class="bg-on-background py-20 md:py-24 px-6 md:px-8 overflow-hidden" aria-labelledby="areas-heading">
 <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-center">
 <div class="flex-1 text-white">
 <span class="text-primary-fixed-dim font-headline font-bold uppercase tracking-[0.3em] text-xs">Service Coverage</span>
 <h2 id="areas-heading" class="text-4xl md:text-6xl font-headline font-black mt-6 mb-8 uppercase leading-[0.9]">We Cover <br/>the Entire ${config.location.metroArea}</h2>
 <p class="text-tertiary-fixed-dim text-lg mb-10 max-w-md">
-                        Rapid-response teams strategically positioned across the ${config.location.metroAreaFull}. ${config.stats.responseTime} maximum arrival for all emergency calls.
-                    </p>
+  Rapid-response teams strategically positioned across the ${config.location.metroAreaFull}. ${config.stats.responseTime} maximum arrival for all emergency calls.
+</p>
 <ul class="grid grid-cols-2 sm:grid-cols-3 gap-3">
 ${buildServiceAreas()}
 </ul>
 </div>
 <div class="flex-1 w-full relative">
-<div class="aspect-square bg-surface-container-lowest/5 border border-white/10 p-4">
-<div class="w-full h-full bg-on-surface relative overflow-hidden grayscale">
-<img alt="Map of ${config.companyName} service areas across the ${config.location.metroAreaFull}" class="w-full h-full object-cover opacity-30" src="${config.images.mapImage}"/>
-<!-- Tactical Markers -->
-<div class="absolute top-1/3 left-1/2 w-4 h-4 bg-[${config.colors.primaryAccent}] animate-pulse rounded-full" aria-hidden="true"></div>
-<div class="absolute top-1/2 left-1/4 w-4 h-4 bg-[${config.colors.primaryAccent}] animate-pulse rounded-full" aria-hidden="true"></div>
-<div class="absolute bottom-1/3 right-1/3 w-4 h-4 bg-[${config.colors.primaryAccent}] animate-pulse rounded-full" aria-hidden="true"></div>
-</div>
-</div>
+  <div class="relative overflow-hidden" style="aspect-ratio:1/1;">
+    <img
+      src="https://images.unsplash.com/photo-1477959858617-67f504b354b7?w=900&auto=format&fit=crop&q=80"
+      alt="Toronto skyline with CN Tower — ${config.companyName} serves the entire GTA"
+      class="w-full h-full object-cover"
+      style="object-position:center;"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+    <!-- Response time badge -->
+    <div class="absolute bottom-0 left-0 right-0 p-6 flex flex-wrap gap-4 justify-between items-end">
+      <div>
+        <p class="text-white/60 text-xs uppercase tracking-widest font-bold">Avg. Response Time</p>
+        <p class="text-white text-4xl font-headline font-black">${config.stats.responseTime}</p>
+      </div>
+      <div class="text-right">
+        <p class="text-white/60 text-xs uppercase tracking-widest font-bold">Service Areas</p>
+        <p class="text-white text-4xl font-headline font-black">${config.serviceAreas.length}+</p>
+      </div>
+    </div>
+    <!-- Accent line -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[${config.colors.primaryAccent}] to-[${config.colors.primaryDark}]"></div>
+  </div>
 </div>
 </div>
 </section>
 
 <!-- Final Conversion / Voucher -->
 <section class="py-20 md:py-24 px-6 md:px-8 bg-surface" aria-labelledby="cta-heading">
-<div class="max-w-4xl mx-auto relative group">
-<div class="absolute -inset-4 border-2 border-primary-fixed-dim/20 scale-105 group-hover:scale-100 transition-transform duration-700" aria-hidden="true"></div>
-<div class="bg-on-background p-10 md:p-20 text-center relative z-10 overflow-hidden">
-<!-- Texture Decor -->
-<div class="absolute top-0 right-0 p-4 opacity-10" aria-hidden="true">
-<span class="material-symbols-outlined text-white text-9xl">architecture</span>
-</div>
-<h2 id="cta-heading" class="text-3xl md:text-5xl font-headline font-black text-white uppercase mb-6 tracking-tight">${config.promotion.headline}</h2>
-<p class="text-white/60 mb-12 max-w-lg mx-auto">${config.promotion.description}</p>
-<div class="inline-flex flex-col items-center bg-white/5 border border-white/10 p-8 mb-12">
-<span class="text-[0.65rem] text-primary-fixed-dim font-bold tracking-[0.4em] uppercase mb-2">${config.promotion.label}</span>
-<div class="text-5xl md:text-6xl font-black text-white">${config.promotion.amount}</div>
-<span class="text-[0.7rem] text-white/40 mt-4 uppercase tracking-widest">${config.promotion.detail}</span>
-</div>
-<div class="flex flex-col md:flex-row gap-4 justify-center">
-<a href="tel:${config.phone.tel}" class="golden-gradient text-[#261a00] px-12 py-5 font-headline font-black uppercase tracking-widest text-sm hover:-translate-y-1 transition-transform duration-200 inline-flex items-center justify-center gap-2 min-h-[48px]">
-  <span class="material-symbols-outlined text-lg" aria-hidden="true" style="font-variation-settings: 'FILL' 1;">call</span>
-  Call ${config.phone.display}
-</a>
-<a href="#contact" class="bg-transparent border border-white/20 text-white px-12 py-5 font-headline font-black uppercase tracking-widest text-sm hover:bg-white/5 transition-colors duration-200 inline-flex items-center justify-center min-h-[48px]">
-                            Book Online
-                        </a>
-</div>
-</div>
+<div class="max-w-6xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-2 overflow-hidden shadow-2xl">
+    <!-- Left: Image panel -->
+    <div class="relative min-h-[320px] md:min-h-0">
+      <img
+        src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&auto=format&fit=crop"
+        alt="Premium bathroom renovation by ${config.companyName}"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30"></div>
+      <div class="absolute inset-0 flex flex-col justify-end p-8">
+        <span class="inline-block bg-[${config.colors.primaryAccent}] text-white text-[0.65rem] font-bold tracking-[0.4em] uppercase mb-3 px-3 py-1 w-fit">${config.promotion.label}</span>
+        <div class="text-white text-6xl font-headline font-black leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">${config.promotion.amount}</div>
+        <span class="text-white/80 text-sm mt-3 uppercase tracking-widest font-bold drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">${config.promotion.detail}</span>
+      </div>
+    </div>
+    <!-- Right: Content panel -->
+    <div class="bg-[${config.colors.navy}] p-10 md:p-14 flex flex-col justify-center relative overflow-hidden">
+      <div class="absolute top-0 right-0 opacity-5" aria-hidden="true">
+        <span class="material-symbols-outlined text-white" style="font-size:200px;">plumbing</span>
+      </div>
+      <h2 id="cta-heading" class="text-3xl md:text-4xl font-headline font-black text-white uppercase mb-4 tracking-tight relative z-10">${config.promotion.headline}</h2>
+      <p class="text-white/60 mb-8 leading-relaxed relative z-10">${config.promotion.description}</p>
+      <div class="space-y-4 relative z-10">
+        <div class="flex items-center gap-3 text-white/70 text-sm">
+          <span class="material-symbols-outlined text-[${config.colors.primaryAccent}] text-lg" style="font-variation-settings:'FILL' 1;">verified</span>
+          Fully licensed, WSIB covered &amp; insured
+        </div>
+        <div class="flex items-center gap-3 text-white/70 text-sm">
+          <span class="material-symbols-outlined text-[${config.colors.primaryAccent}] text-lg" style="font-variation-settings:'FILL' 1;">schedule</span>
+          Free estimates — no obligation
+        </div>
+        <div class="flex items-center gap-3 text-white/70 text-sm">
+          <span class="material-symbols-outlined text-[${config.colors.primaryAccent}] text-lg" style="font-variation-settings:'FILL' 1;">thumb_up</span>
+          100% Satisfaction Guarantee
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 mt-10 relative z-10">
+        <a href="tel:${config.phone.tel}" class="golden-gradient text-[#261a00] px-8 py-4 font-headline font-black uppercase tracking-wider text-sm hover:-translate-y-0.5 transition-transform duration-200 inline-flex items-center justify-center gap-2 min-h-[48px] flex-1">
+          <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1;">call</span>
+          Call Now
+        </a>
+        <a href="#contact" class="border border-white/20 text-white px-8 py-4 font-headline font-bold uppercase tracking-wider text-sm hover:bg-white/10 transition-colors duration-200 inline-flex items-center justify-center min-h-[48px] flex-1">
+          Book Online
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 </section>
 </main>
@@ -636,8 +757,12 @@ ${buildSocialLinks()}
 </a>
 </div>
 
+<!-- Service Modals -->
+${buildServiceModals()}
+
 <!-- Mobile menu toggle script -->
 <script>
+  // Mobile menu toggle
   document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
     const menu = document.getElementById('mobile-menu');
     const isOpen = !menu.classList.contains('hidden');
@@ -646,6 +771,137 @@ ${buildSocialLinks()}
     const icon = this.querySelector('.material-symbols-outlined');
     icon.textContent = isOpen ? 'menu' : 'close';
   });
+
+  // Service modal logic
+  function openModal(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    el.querySelector('.modal-close, [aria-label="Close dialog"]')?.focus();
+  }
+  function closeModal(el) {
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.open-service-modal').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.modal));
+  });
+  document.querySelectorAll('.service-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay);
+    });
+    overlay.querySelectorAll('.modal-close').forEach(btn => {
+      btn.addEventListener('click', () => closeModal(overlay));
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.service-modal-overlay.open').forEach(closeModal);
+    }
+  });
+
+  // Form submission → Make.com webhook
+  (function() {
+    const WEBHOOK_URL = '${config.webhookUrl || ''}';
+    const form = document.querySelector('form[aria-label="Request service form"]');
+    if (!form) return;
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+
+      // Collect form data
+      const data = {
+        name: document.getElementById('full-name').value.trim(),
+        service: document.getElementById('service-type').value,
+        phone: document.getElementById('phone').value.trim(),
+        company: '${config.companyName}',
+        companyPhone: '${config.phone.display}',
+        timestamp: new Date().toISOString(),
+        source: window.location.hostname
+      };
+
+      // Validate
+      if (!data.name || !data.phone) {
+        btn.textContent = 'Please fill all fields';
+        btn.classList.add('opacity-70');
+        setTimeout(() => { btn.textContent = originalText; btn.classList.remove('opacity-70'); }, 2000);
+        return;
+      }
+
+      // Submit
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        if (WEBHOOK_URL) {
+          await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+            mode: 'no-cors'
+          });
+        }
+        // Success state
+        btn.textContent = '✓ Request Sent!';
+        btn.classList.remove('golden-gradient');
+        btn.classList.add('bg-green-600', 'text-white');
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          btn.classList.add('golden-gradient');
+          btn.classList.remove('bg-green-600', 'text-white');
+        }, 4000);
+      } catch (err) {
+        btn.textContent = 'Error — Please Call Us';
+        setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+      }
+    });
+  })();
+
+  // Scroll-spy: highlight active nav link based on visible section
+  (function() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('#desktop-nav .nav-link');
+    if (!sections.length || !navLinks.length) return;
+
+    function clearActive() {
+      navLinks.forEach(l => {
+        l.classList.remove('nav-link-active');
+        l.style.borderBottom = '';
+        l.style.paddingBottom = '';
+      });
+    }
+    function setActive(sectionId) {
+      clearActive();
+      const link = document.querySelector('#desktop-nav .nav-link[data-section="' + sectionId + '"]');
+      if (link) link.classList.add('nav-link-active');
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      let best = null;
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!best || entry.intersectionRatio > best.intersectionRatio) {
+            best = entry;
+          }
+        }
+      });
+      if (best) setActive(best.target.id);
+    }, { threshold: [0.1, 0.3, 0.5], rootMargin: '-80px 0px -40% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        clearActive();
+        this.classList.add('nav-link-active');
+      });
+    });
+  })();
 </script>
 </body>
 </html>`;

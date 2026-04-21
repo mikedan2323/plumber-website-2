@@ -138,6 +138,42 @@
       .urgent-pulse {
         animation: urgentPulse 2s ease-in-out infinite;
       }
+      /* Marquee Animation for Trust Badges */
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-marquee {
+        animation: marquee 30s linear infinite;
+        display: inline-flex;
+        width: max-content;
+      }
+      /* Service Modal */
+      .service-modal-overlay {
+        position: fixed; inset: 0; z-index: 9999;
+        background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+        display: flex; align-items: center; justify-content: center;
+        padding: 1rem; opacity: 0; pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .service-modal-overlay.open {
+        opacity: 1; pointer-events: all;
+      }
+      .service-modal {
+        background: #fff; max-width: 680px; width: 100%;
+        max-height: 90vh; overflow-y: auto;
+        transform: translateY(24px); transition: transform 0.3s ease;
+        position: relative;
+      }
+      .service-modal-overlay.open .service-modal {
+        transform: translateY(0);
+      }
+      /* Active nav link */
+      .nav-link-active {
+        color: #c62828 !important;
+        border-bottom: 2px solid #c62828;
+        padding-bottom: 4px;
+      }
     </style>
 <!-- Schema.org Structured Data -->
 <script type="application/ld+json">
@@ -215,14 +251,14 @@
 <a href="/" class="text-2xl font-black tracking-tighter text-[#000000] dark:text-white font-headline flex items-center" aria-label="Bradshaw Plumbing home">
                 <img src="https://www.bradshawplumbing.com/wp-content/uploads/2017/09/logo.png" alt="Bradshaw Plumbing logo" class="h-10 md:h-12 w-auto max-w-[220px] object-contain" style="mix-blend-mode: multiply;" />
             </a>
-<div class="hidden md:flex gap-8 items-center font-headline uppercase tracking-tight font-bold">
-<a class="text-[#c62828] border-b-2 border-[#c62828] pb-1 transition-colors duration-200" href="#services">Services</a>
-<a class="text-[#455a64] hover:text-[#c62828] transition-colors duration-200" href="#reviews">Reviews</a>
-<a class="text-[#455a64] hover:text-[#c62828] transition-colors duration-200" href="#service-areas">Service Areas</a>
-<a class="text-[#455a64] hover:text-[#c62828] transition-colors duration-200" href="#contact">Contact</a>
+<div class="hidden lg:flex gap-8 items-center font-headline uppercase tracking-tight font-bold" id="desktop-nav">
+<a class="nav-link text-[#455a64] hover:text-[#c62828] transition-colors duration-200" href="#services" data-section="services">Services</a>
+<a class="nav-link text-[#455a64] hover:text-[#c62828] transition-colors duration-200" href="#reviews" data-section="reviews">Reviews</a>
+<a class="nav-link text-[#455a64] hover:text-[#c62828] transition-colors duration-200" href="#service-areas" data-section="service-areas">Service Areas</a>
+<a class="nav-link text-[#455a64] hover:text-[#c62828] transition-colors duration-200" href="#contact" data-section="contact">Contact</a>
 </div>
 <div class="flex items-center gap-4">
-<a href="tel:+14162867511" class="hidden lg:flex items-center gap-2 text-[#1a1a2e] font-headline font-bold text-sm min-h-[44px]" aria-label="Call (416) 286-7511">
+<a href="tel:+14162867511" class="hidden xl:flex items-center gap-2 text-[#1a1a2e] font-headline font-bold text-sm min-h-[44px]" aria-label="Call (416) 286-7511">
   <span class="material-symbols-outlined text-[#c62828]" aria-hidden="true" style="font-variation-settings: 'FILL' 1;">call</span>
   (416) 286-7511
 </a>
@@ -230,13 +266,13 @@
                     Get Free Estimate
                 </a>
 <!-- UI/UX: Mobile hamburger menu -->
-<button id="mobile-menu-toggle" class="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+<button id="mobile-menu-toggle" class="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
   <span class="material-symbols-outlined text-2xl text-[#1a1a2e]" aria-hidden="true">menu</span>
 </button>
 </div>
 </div>
 <!-- Mobile menu -->
-<div id="mobile-menu" class="hidden md:hidden bg-[#fafafa] border-t border-outline-variant/20 px-6 py-4" role="navigation" aria-label="Mobile navigation">
+<div id="mobile-menu" class="hidden lg:hidden bg-[#fafafa] border-t border-outline-variant/20 px-6 py-4" role="navigation" aria-label="Mobile navigation">
   <div class="flex flex-col gap-4 font-headline uppercase tracking-tight font-bold">
     <a class="text-[#455a64] hover:text-[#c62828] transition-colors duration-200 py-2 min-h-[44px] flex items-center" href="#services">Services</a>
     <a class="text-[#455a64] hover:text-[#c62828] transition-colors duration-200 py-2 min-h-[44px] flex items-center" href="#reviews">Reviews</a>
@@ -252,9 +288,9 @@
 
 <main id="main-content" class="pt-0">
 <!-- Hero Section -->
-<section class="relative min-h-[85vh] flex flex-col md:flex-row items-stretch overflow-hidden" aria-labelledby="hero-heading">
+<section class="relative min-h-[85vh] flex flex-col lg:flex-row items-stretch overflow-hidden" aria-labelledby="hero-heading">
 <!-- Left Side: Content -->
-<div class="flex-1 px-6 md:px-16 lg:px-24 py-16 flex flex-col justify-center bg-surface">
+<div class="flex-1 px-6 lg:px-16 xl:px-24 py-16 flex flex-col justify-center bg-surface">
 <div class="max-w-2xl">
 <span class="inline-block py-1 px-3 bg-secondary-container text-on-secondary-container text-[0.65rem] font-bold tracking-widest uppercase mb-6 rounded-sm">
                         Serving The GTA Since 1989
@@ -293,7 +329,7 @@
 </div>
 </div>
 <!-- Right Side: Contact Form -->
-<div class="flex-1 relative flex items-center justify-center p-6 md:p-16" id="contact">
+<div class="flex-1 relative flex items-center justify-center p-6 lg:p-16" id="contact">
 <!-- Background Image -->
 <div class="absolute inset-0 z-0" aria-hidden="true">
 <img alt="" class="w-full h-full object-cover grayscale opacity-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxN_rIexSBNxApdl0emiZggbgogN4txwOsmC3zyHOkfMSybPhyWkBW6Ayzvje-PZKFP5gHUUXHYRspL6qqW_m0AXm_C3mikRYbSoqoQ6hqRcRGvRs37WEgGpGw-jy-Hz1CZMwoARzKhefS86iQkzpPbbw82YRHgFXkD2oYbH3znDlxe7pEhBMsiRDpw1bdHRr1362-3fI1zah7ctVWM3C74zQ1aMUmLkV51U1HFm80_7yn2dV7Yuje5xHwc1xocRLary6jE5jKPWw"/>
@@ -336,8 +372,33 @@
 </section>
 
 <!-- Trust Ribbon -->
-<section class="bg-surface-container-low py-10 px-6 border-y border-outline-variant/10" aria-label="Trust certifications">
-<div class="max-w-7xl mx-auto flex flex-wrap justify-center md:justify-between items-center gap-8 md:gap-12 opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500">
+<section class="bg-surface-container-low py-10 px-0 border-y border-outline-variant/10 overflow-hidden" aria-label="Trust certifications">
+<div class="animate-marquee opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 flex gap-16 pr-16 items-center">
+
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl" aria-hidden="true">verified_user</span>
+<span class="font-headline font-black text-base md:text-xl">FULLY LICENSED & INSURED</span>
+</div>
+
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl" aria-hidden="true">workspace_premium</span>
+<span class="font-headline font-black text-base md:text-xl">HOMESTARS VERIFIED</span>
+</div>
+
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl" aria-hidden="true">construction</span>
+<span class="font-headline font-black text-base md:text-xl">WSIB COVERED</span>
+</div>
+
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl" aria-hidden="true">shield_with_heart</span>
+<span class="font-headline font-black text-base md:text-xl">SINCE 1989</span>
+</div>
+
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl" aria-hidden="true">store</span>
+<span class="font-headline font-black text-base md:text-xl">SHOWROOM AT 12 OLD KINGSTON RD</span>
+</div>
 
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-3xl" aria-hidden="true">verified_user</span>
@@ -369,12 +430,12 @@
 <!-- Service Grid -->
 <section id="services" class="py-20 md:py-24 px-6 md:px-8 bg-surface" aria-labelledby="services-heading">
 <div class="max-w-7xl mx-auto">
-<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-<div class="max-w-xl">
+<div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-8">
+<div class="max-w-xl text-center md:text-left">
 <span class="text-primary-fixed-dim font-headline font-bold uppercase tracking-[0.3em] text-xs">Our Services</span>
 <h2 id="services-heading" class="text-3xl md:text-5xl font-headline font-black text-primary mt-4 uppercase leading-none">Complete Plumbing <br/>Solutions</h2>
 </div>
-<p class="text-[#37474f] max-w-xs text-sm leading-relaxed">
+<p class="text-[#37474f] max-w-xs text-sm leading-relaxed text-center md:text-right">
                         We deploy advanced diagnostic equipment and precision craftsmanship to resolve the most complex plumbing challenges.
                     </p>
 </div>
@@ -387,9 +448,9 @@
 <span class="material-symbols-outlined text-[#c62828] text-4xl mb-4" aria-hidden="true">plumbing</span>
 <h3 class="text-2xl font-headline font-extrabold text-white uppercase mb-2">Residential Plumbing Service</h3>
 <p class="text-white/70 text-sm mb-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">Tap installations, toilet maintenance, pipe repairs, and complete remodelling projects — done right the first time.</p>
-<a class="text-[#c62828] font-headline font-bold text-[0.65rem] tracking-widest uppercase flex items-center gap-2 min-h-[44px]" href="#contact">
-Learn More <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
-</a>
+<button class="text-[#c62828] font-headline font-bold text-[0.65rem] tracking-widest uppercase flex items-center gap-2 min-h-[44px] open-service-modal" data-modal="service-modal-0" aria-label="Learn more about Residential Plumbing Service">
+          Learn More <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
+         </button>
 </div>
 </div>
 
@@ -400,9 +461,9 @@ Learn More <span class="material-symbols-outlined text-xs" aria-hidden="true">ar
 <span class="material-symbols-outlined text-[#c62828] text-4xl mb-4" aria-hidden="true">bathroom</span>
 <h3 class="text-2xl font-headline font-extrabold text-white uppercase mb-2">Bathroom Renovations</h3>
 <p class="text-white/70 text-sm mb-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">From design consultation to final installation — showers, vanities, tubs, and fixtures from top brands in our showroom.</p>
-<a class="text-[#c62828] font-headline font-bold text-[0.65rem] tracking-widest uppercase flex items-center gap-2 min-h-[44px]" href="#contact">
-Learn More <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
-</a>
+<button class="text-[#c62828] font-headline font-bold text-[0.65rem] tracking-widest uppercase flex items-center gap-2 min-h-[44px] open-service-modal" data-modal="service-modal-1" aria-label="Learn more about Bathroom Renovations">
+          Learn More <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
+         </button>
 </div>
 </div>
 
@@ -414,8 +475,8 @@ Learn More <span class="material-symbols-outlined text-xs" aria-hidden="true">ar
 <h3 class="text-2xl font-headline font-extrabold text-white uppercase mb-2">24/7 Emergency Plumbing</h3>
 <p class="text-white/70 text-sm mb-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">Burst pipes, flooding, or sewer backup? Our radio-dispatched trucks are stocked and ready to respond any hour, any day.</p>
 <a class="text-[#c62828] font-headline font-bold text-[0.65rem] tracking-widest uppercase flex items-center gap-2 min-h-[44px]" href="tel:+14162867511">
-Call Now <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
-</a>
+          Call Now <span class="material-symbols-outlined text-xs" aria-hidden="true">arrow_forward</span>
+         </a>
 </div>
 </div>
 </div>
@@ -640,15 +701,15 @@ Call Now <span class="material-symbols-outlined text-xs" aria-hidden="true">arro
 </div>
 </section>
 
-<!-- Service Area / Map -->
+<!-- Service Area -->
 <section id="service-areas" class="bg-on-background py-20 md:py-24 px-6 md:px-8 overflow-hidden" aria-labelledby="areas-heading">
 <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-center">
 <div class="flex-1 text-white">
 <span class="text-primary-fixed-dim font-headline font-bold uppercase tracking-[0.3em] text-xs">Service Coverage</span>
 <h2 id="areas-heading" class="text-4xl md:text-6xl font-headline font-black mt-6 mb-8 uppercase leading-[0.9]">We Cover <br/>the Entire GTA</h2>
 <p class="text-tertiary-fixed-dim text-lg mb-10 max-w-md">
-                        Rapid-response teams strategically positioned across the Greater Toronto Area. 90 minutes maximum arrival for all emergency calls.
-                    </p>
+  Rapid-response teams strategically positioned across the Greater Toronto Area. 90 minutes maximum arrival for all emergency calls.
+</p>
 <ul class="grid grid-cols-2 sm:grid-cols-3 gap-3">
 
 <li class="flex items-center gap-3 text-sm font-bold tracking-tight">
@@ -713,45 +774,82 @@ Call Now <span class="material-symbols-outlined text-xs" aria-hidden="true">arro
 </ul>
 </div>
 <div class="flex-1 w-full relative">
-<div class="aspect-square bg-surface-container-lowest/5 border border-white/10 p-4">
-<div class="w-full h-full bg-on-surface relative overflow-hidden grayscale">
-<img alt="Map of Bradshaw Plumbing service areas across the Greater Toronto Area" class="w-full h-full object-cover opacity-30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvFu-VNmegz9Sz6dNqm-X9urnQnT-mM8iZid3CAjnJd1o0gxICsknCTDA69o2fjBu0oRWho04k5anYGigu80rAMgzN4U2E_F36J1ovPeGoZ1uU1m2LKAxASqfhzc6sdtVp4F6De34qZ2Jy3GXyNCcrp4I18JhNiflxV2SequgSiKxbKwRl2EbZPgMLHQS6tK8_80fVCXKZpE4Es23kahtBo81qHYl0VY96OxX-7SbwkkjB7lXOuChsvzv0YS8N3iSz0XxhrXSmT40"/>
-<!-- Tactical Markers -->
-<div class="absolute top-1/3 left-1/2 w-4 h-4 bg-[#c62828] animate-pulse rounded-full" aria-hidden="true"></div>
-<div class="absolute top-1/2 left-1/4 w-4 h-4 bg-[#c62828] animate-pulse rounded-full" aria-hidden="true"></div>
-<div class="absolute bottom-1/3 right-1/3 w-4 h-4 bg-[#c62828] animate-pulse rounded-full" aria-hidden="true"></div>
-</div>
-</div>
+  <div class="relative overflow-hidden" style="aspect-ratio:1/1;">
+    <img
+      src="https://images.unsplash.com/photo-1477959858617-67f504b354b7?w=900&auto=format&fit=crop&q=80"
+      alt="Toronto skyline with CN Tower — Bradshaw Plumbing serves the entire GTA"
+      class="w-full h-full object-cover"
+      style="object-position:center;"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+    <!-- Response time badge -->
+    <div class="absolute bottom-0 left-0 right-0 p-6 flex flex-wrap gap-4 justify-between items-end">
+      <div>
+        <p class="text-white/60 text-xs uppercase tracking-widest font-bold">Avg. Response Time</p>
+        <p class="text-white text-4xl font-headline font-black">90 minutes</p>
+      </div>
+      <div class="text-right">
+        <p class="text-white/60 text-xs uppercase tracking-widest font-bold">Service Areas</p>
+        <p class="text-white text-4xl font-headline font-black">15+</p>
+      </div>
+    </div>
+    <!-- Accent line -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#c62828] to-[#8e0000]"></div>
+  </div>
 </div>
 </div>
 </section>
 
 <!-- Final Conversion / Voucher -->
 <section class="py-20 md:py-24 px-6 md:px-8 bg-surface" aria-labelledby="cta-heading">
-<div class="max-w-4xl mx-auto relative group">
-<div class="absolute -inset-4 border-2 border-primary-fixed-dim/20 scale-105 group-hover:scale-100 transition-transform duration-700" aria-hidden="true"></div>
-<div class="bg-on-background p-10 md:p-20 text-center relative z-10 overflow-hidden">
-<!-- Texture Decor -->
-<div class="absolute top-0 right-0 p-4 opacity-10" aria-hidden="true">
-<span class="material-symbols-outlined text-white text-9xl">architecture</span>
-</div>
-<h2 id="cta-heading" class="text-3xl md:text-5xl font-headline font-black text-white uppercase mb-6 tracking-tight">Ready for a Bathroom Upgrade?</h2>
-<p class="text-white/60 mb-12 max-w-lg mx-auto">Book a free design consultation and receive an immediate credit toward your bathroom renovation project. Visit our showroom or call today.</p>
-<div class="inline-flex flex-col items-center bg-white/5 border border-white/10 p-8 mb-12">
-<span class="text-[0.65rem] text-primary-fixed-dim font-bold tracking-[0.4em] uppercase mb-2">New Customer Special</span>
-<div class="text-5xl md:text-6xl font-black text-white">$75 OFF</div>
-<span class="text-[0.7rem] text-white/40 mt-4 uppercase tracking-widest">YOUR FIRST SERVICE CALL</span>
-</div>
-<div class="flex flex-col md:flex-row gap-4 justify-center">
-<a href="tel:+14162867511" class="golden-gradient text-[#261a00] px-12 py-5 font-headline font-black uppercase tracking-widest text-sm hover:-translate-y-1 transition-transform duration-200 inline-flex items-center justify-center gap-2 min-h-[48px]">
-  <span class="material-symbols-outlined text-lg" aria-hidden="true" style="font-variation-settings: 'FILL' 1;">call</span>
-  Call (416) 286-7511
-</a>
-<a href="#contact" class="bg-transparent border border-white/20 text-white px-12 py-5 font-headline font-black uppercase tracking-widest text-sm hover:bg-white/5 transition-colors duration-200 inline-flex items-center justify-center min-h-[48px]">
-                            Book Online
-                        </a>
-</div>
-</div>
+<div class="max-w-6xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-2 overflow-hidden shadow-2xl">
+    <!-- Left: Image panel -->
+    <div class="relative min-h-[320px] md:min-h-0">
+      <img
+        src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&auto=format&fit=crop"
+        alt="Premium bathroom renovation by Bradshaw Plumbing"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30"></div>
+      <div class="absolute inset-0 flex flex-col justify-end p-8">
+        <span class="inline-block bg-[#c62828] text-white text-[0.65rem] font-bold tracking-[0.4em] uppercase mb-3 px-3 py-1 w-fit">New Customer Special</span>
+        <div class="text-white text-6xl font-headline font-black leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">$75 OFF</div>
+        <span class="text-white/80 text-sm mt-3 uppercase tracking-widest font-bold drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">YOUR FIRST SERVICE CALL</span>
+      </div>
+    </div>
+    <!-- Right: Content panel -->
+    <div class="bg-[#1a1a2e] p-10 md:p-14 flex flex-col justify-center relative overflow-hidden">
+      <div class="absolute top-0 right-0 opacity-5" aria-hidden="true">
+        <span class="material-symbols-outlined text-white" style="font-size:200px;">plumbing</span>
+      </div>
+      <h2 id="cta-heading" class="text-3xl md:text-4xl font-headline font-black text-white uppercase mb-4 tracking-tight relative z-10">Ready for a Bathroom Upgrade?</h2>
+      <p class="text-white/60 mb-8 leading-relaxed relative z-10">Book a free design consultation and receive an immediate credit toward your bathroom renovation project. Visit our showroom or call today.</p>
+      <div class="space-y-4 relative z-10">
+        <div class="flex items-center gap-3 text-white/70 text-sm">
+          <span class="material-symbols-outlined text-[#c62828] text-lg" style="font-variation-settings:'FILL' 1;">verified</span>
+          Fully licensed, WSIB covered &amp; insured
+        </div>
+        <div class="flex items-center gap-3 text-white/70 text-sm">
+          <span class="material-symbols-outlined text-[#c62828] text-lg" style="font-variation-settings:'FILL' 1;">schedule</span>
+          Free estimates — no obligation
+        </div>
+        <div class="flex items-center gap-3 text-white/70 text-sm">
+          <span class="material-symbols-outlined text-[#c62828] text-lg" style="font-variation-settings:'FILL' 1;">thumb_up</span>
+          100% Satisfaction Guarantee
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 mt-10 relative z-10">
+        <a href="tel:+14162867511" class="golden-gradient text-[#261a00] px-8 py-4 font-headline font-black uppercase tracking-wider text-sm hover:-translate-y-0.5 transition-transform duration-200 inline-flex items-center justify-center gap-2 min-h-[48px] flex-1">
+          <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1;">call</span>
+          Call Now
+        </a>
+        <a href="#contact" class="border border-white/20 text-white px-8 py-4 font-headline font-bold uppercase tracking-wider text-sm hover:bg-white/10 transition-colors duration-200 inline-flex items-center justify-center min-h-[48px] flex-1">
+          Book Online
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 </section>
 </main>
@@ -817,8 +915,167 @@ Call Now <span class="material-symbols-outlined text-xs" aria-hidden="true">arro
 </a>
 </div>
 
+<!-- Service Modals -->
+
+<div id="service-modal-0" class="service-modal-overlay" role="dialog" aria-modal="true" aria-label="Residential Plumbing Service">
+  <div class="service-modal">
+    <div class="relative h-52 overflow-hidden">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuSOrwB6MTrXeiACt-yRS3hL6FMnI6kFiL_o50xYE33HO52128cUrSXiuuLTJ5yWH56nOO3rJmylMjeoTvY1xkiIC9AzJ6eXyUyuAWcCTxZeIGuteFLKZuVTYv8mzpSeBg9xF3XTwL1TtBkqDG8bQazVwSLRXj8KRKIxTVX2kh5WTilS9NwgWhe22vsA8ep0NW97AgAvtwn_1eorT3b2v4RceKtSfaqioYPB1K-G6SK8cZaFSCbANpwyTabRyYAy9ZF7SZgzfRPmE" alt="Residential plumbing repair and installation service" class="w-full h-full object-cover"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-6 flex items-end gap-4">
+        <span class="material-symbols-outlined text-[#c62828] text-4xl" style="font-variation-settings:'FILL' 1;">plumbing</span>
+        <h3 class="text-white text-2xl font-headline font-extrabold uppercase">Residential Plumbing Service</h3>
+      </div>
+      <button class="modal-close absolute top-4 right-4 w-10 h-10 bg-black/50 text-white flex items-center justify-center hover:bg-black/80 transition-colors" aria-label="Close dialog">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-8">
+      <p class="text-[#37474f] mb-6 leading-relaxed">Tap installations, toilet maintenance, pipe repairs, and complete remodelling projects — done right the first time.</p>
+      <ul class="space-y-3 mb-8"><li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Full tap & faucet installation and cartridge replacement
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Toilet repair, rebuild, and new installations
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Copper, PVC, and PEX pipe repair & re-piping
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Shut-off valve replacement and pressure balancing
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Garbage disposal installation and dishwasher hookups
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Whole-home plumbing inspections with written report
+      </li></ul>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="#contact" class="golden-gradient text-[#261a00] px-6 py-3 font-headline font-bold uppercase tracking-wider text-sm text-center hover:-translate-y-0.5 transition-transform duration-200 flex-1 flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">call</span>
+          Call Now — Free Estimate
+        </a>
+        <a href="#contact" class="border-2 border-[#1a1a2e] text-[#1a1a2e] px-6 py-3 font-headline font-bold uppercase tracking-wider text-sm text-center hover:bg-[#1a1a2e] hover:text-white transition-colors duration-200 flex-1 flex items-center justify-center modal-close">
+          Book Online
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="service-modal-1" class="service-modal-overlay" role="dialog" aria-modal="true" aria-label="Bathroom Renovations">
+  <div class="service-modal">
+    <div class="relative h-52 overflow-hidden">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWQPid2vkWW-vmjmvevb04oCfdbdRV_jr3KwSx2icBmvJPHF7T4vtVulHXwI8L4BbKjbdxFMSJtxCzW3cKuKeaqtnZU3aZzWZu6onVATW3zVC8EajI6fhZ25geZCCXiXsyS9ifo2zYZA-0HAAA-BW3yg0ZxgYQ4H77OxTRMz21xTxIB14-lAJilxrBswraKn7YSBqWcyaZojSNKYGOXppD1JhOM6dWFSxUlXPSlTtGHbvWl4VqjZEj6ZXcHMJDm65DhOeEQKDLQ2g" alt="Complete bathroom renovation and design services" class="w-full h-full object-cover"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-6 flex items-end gap-4">
+        <span class="material-symbols-outlined text-[#c62828] text-4xl" style="font-variation-settings:'FILL' 1;">bathroom</span>
+        <h3 class="text-white text-2xl font-headline font-extrabold uppercase">Bathroom Renovations</h3>
+      </div>
+      <button class="modal-close absolute top-4 right-4 w-10 h-10 bg-black/50 text-white flex items-center justify-center hover:bg-black/80 transition-colors" aria-label="Close dialog">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-8">
+      <p class="text-[#37474f] mb-6 leading-relaxed">From design consultation to final installation — showers, vanities, tubs, and fixtures from top brands in our showroom.</p>
+      <ul class="space-y-3 mb-8"><li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Full bathroom gut and rebuild from structural framing
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Tile installation — floors, walls, and custom shower surrounds
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Vanity, sink, and faucet supply & installation
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Walk-in shower and soaker tub conversions
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        In-floor radiant heating rough-in
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Showroom access at 12 Old Kingston Rd — no markup surprises
+      </li></ul>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="#contact" class="golden-gradient text-[#261a00] px-6 py-3 font-headline font-bold uppercase tracking-wider text-sm text-center hover:-translate-y-0.5 transition-transform duration-200 flex-1 flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">call</span>
+          Call Now — Free Estimate
+        </a>
+        <a href="#contact" class="border-2 border-[#1a1a2e] text-[#1a1a2e] px-6 py-3 font-headline font-bold uppercase tracking-wider text-sm text-center hover:bg-[#1a1a2e] hover:text-white transition-colors duration-200 flex-1 flex items-center justify-center modal-close">
+          Book Online
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="service-modal-2" class="service-modal-overlay" role="dialog" aria-modal="true" aria-label="24/7 Emergency Plumbing">
+  <div class="service-modal">
+    <div class="relative h-52 overflow-hidden">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRAYj6MWqbIoRHlooD3bS2ma4JlIWFsmE3uxtpLNa6HU9Nbm1cgpyprCc2QdWGw291J41Y0lHFNKwUNgRSOni1Zx3rMCSbFZCc96wzqOXo8qos5gcwsrRdQYOvq0HipBJCNUFzEAt5flzoIyQawHSiADchvHq0gsC_2Zl0N3z9v79N0MFMkkNvduxXQrr_ZSGM1Vs8nCiNa1HZJiXFX4tybG4iR4VQbB-qyyqSeHh6vMoM3ekyuDWOS4VEosqpM8keJmu3Dw1z3yo" alt="24/7 emergency plumbing service" class="w-full h-full object-cover"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-6 flex items-end gap-4">
+        <span class="material-symbols-outlined text-[#c62828] text-4xl" style="font-variation-settings:'FILL' 1;">emergency</span>
+        <h3 class="text-white text-2xl font-headline font-extrabold uppercase">24/7 Emergency Plumbing</h3>
+      </div>
+      <button class="modal-close absolute top-4 right-4 w-10 h-10 bg-black/50 text-white flex items-center justify-center hover:bg-black/80 transition-colors" aria-label="Close dialog">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="p-8">
+      <p class="text-[#37474f] mb-6 leading-relaxed">Burst pipes, flooding, or sewer backup? Our radio-dispatched trucks are stocked and ready to respond any hour, any day.</p>
+      <ul class="space-y-3 mb-8"><li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Burst and frozen pipe repair — same day, any hour
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Sewer backup and drain flooding response
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Water heater failure and emergency replacement
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Gas line leak detection and shut-off
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Sump pump failure and basement flood control
+      </li>
+<li class="flex items-start gap-3 text-sm text-[#37474f]">
+        <span class="material-symbols-outlined text-[#c62828] text-base mt-0.5 flex-shrink-0" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        Radio-dispatched trucks stocked with common parts on board
+      </li></ul>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="tel:+14162867511" class="golden-gradient text-[#261a00] px-6 py-3 font-headline font-bold uppercase tracking-wider text-sm text-center hover:-translate-y-0.5 transition-transform duration-200 flex-1 flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">call</span>
+          Call Now — Free Estimate
+        </a>
+        <a href="#contact" class="border-2 border-[#1a1a2e] text-[#1a1a2e] px-6 py-3 font-headline font-bold uppercase tracking-wider text-sm text-center hover:bg-[#1a1a2e] hover:text-white transition-colors duration-200 flex-1 flex items-center justify-center modal-close">
+          Book Online
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Mobile menu toggle script -->
 <script>
+  // Mobile menu toggle
   document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
     const menu = document.getElementById('mobile-menu');
     const isOpen = !menu.classList.contains('hidden');
@@ -827,6 +1084,137 @@ Call Now <span class="material-symbols-outlined text-xs" aria-hidden="true">arro
     const icon = this.querySelector('.material-symbols-outlined');
     icon.textContent = isOpen ? 'menu' : 'close';
   });
+
+  // Service modal logic
+  function openModal(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    el.querySelector('.modal-close, [aria-label="Close dialog"]')?.focus();
+  }
+  function closeModal(el) {
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.open-service-modal').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.modal));
+  });
+  document.querySelectorAll('.service-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay);
+    });
+    overlay.querySelectorAll('.modal-close').forEach(btn => {
+      btn.addEventListener('click', () => closeModal(overlay));
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.service-modal-overlay.open').forEach(closeModal);
+    }
+  });
+
+  // Form submission → Make.com webhook
+  (function() {
+    const WEBHOOK_URL = '';
+    const form = document.querySelector('form[aria-label="Request service form"]');
+    if (!form) return;
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+
+      // Collect form data
+      const data = {
+        name: document.getElementById('full-name').value.trim(),
+        service: document.getElementById('service-type').value,
+        phone: document.getElementById('phone').value.trim(),
+        company: 'Bradshaw Plumbing',
+        companyPhone: '(416) 286-7511',
+        timestamp: new Date().toISOString(),
+        source: window.location.hostname
+      };
+
+      // Validate
+      if (!data.name || !data.phone) {
+        btn.textContent = 'Please fill all fields';
+        btn.classList.add('opacity-70');
+        setTimeout(() => { btn.textContent = originalText; btn.classList.remove('opacity-70'); }, 2000);
+        return;
+      }
+
+      // Submit
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        if (WEBHOOK_URL) {
+          await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+            mode: 'no-cors'
+          });
+        }
+        // Success state
+        btn.textContent = '✓ Request Sent!';
+        btn.classList.remove('golden-gradient');
+        btn.classList.add('bg-green-600', 'text-white');
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          btn.classList.add('golden-gradient');
+          btn.classList.remove('bg-green-600', 'text-white');
+        }, 4000);
+      } catch (err) {
+        btn.textContent = 'Error — Please Call Us';
+        setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
+      }
+    });
+  })();
+
+  // Scroll-spy: highlight active nav link based on visible section
+  (function() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('#desktop-nav .nav-link');
+    if (!sections.length || !navLinks.length) return;
+
+    function clearActive() {
+      navLinks.forEach(l => {
+        l.classList.remove('nav-link-active');
+        l.style.borderBottom = '';
+        l.style.paddingBottom = '';
+      });
+    }
+    function setActive(sectionId) {
+      clearActive();
+      const link = document.querySelector('#desktop-nav .nav-link[data-section="' + sectionId + '"]');
+      if (link) link.classList.add('nav-link-active');
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      let best = null;
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!best || entry.intersectionRatio > best.intersectionRatio) {
+            best = entry;
+          }
+        }
+      });
+      if (best) setActive(best.target.id);
+    }, { threshold: [0.1, 0.3, 0.5], rootMargin: '-80px 0px -40% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        clearActive();
+        this.classList.add('nav-link-active');
+      });
+    });
+  })();
 </script>
 </body>
 </html>

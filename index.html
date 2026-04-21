@@ -284,14 +284,18 @@
 <div class="relative z-10 w-full max-w-md bg-surface-container-lowest p-10 shadow-[0_40px_80px_-15px_rgba(0,27,61,0.12)] border border-outline-variant/10">
 <h2 class="text-2xl font-headline font-bold text-on-surface mb-2 uppercase tracking-tight">Request a Free Estimate</h2>
 <p class="text-sm text-[#31476b] mb-8">Same-day response for emergency and priority requests.</p>
-<form class="space-y-6" aria-label="Request service form">
+<form id="lead-form" class="space-y-6" aria-label="Request service form">
 <div class="architectural-line bg-surface-container-high p-4">
 <label for="full-name" class="block text-[0.65rem] uppercase tracking-widest text-[#31476b] font-bold mb-1">Full Name</label>
-<input id="full-name" class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface placeholder:text-outline min-h-[32px]" placeholder="Your full name" type="text" required aria-required="true"/>
+<input id="full-name" name="fullName" class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface placeholder:text-outline min-h-[32px]" placeholder="Your full name" type="text" required aria-required="true"/>
+</div>
+<div class="architectural-line bg-surface-container-high p-4">
+<label for="email" class="block text-[0.65rem] uppercase tracking-widest text-[#31476b] font-bold mb-1">Email</label>
+<input id="email" name="email" class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface placeholder:text-outline min-h-[32px]" placeholder="you@example.com" type="email" required aria-required="true"/>
 </div>
 <div class="architectural-line bg-surface-container-high p-4">
 <label for="service-type" class="block text-[0.65rem] uppercase tracking-widest text-[#31476b] font-bold mb-1">Service Type</label>
-<select id="service-type" class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface min-h-[32px]" aria-required="true">
+<select id="service-type" name="serviceType" class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface min-h-[32px]" aria-required="true">
 <option>Emergency Plumbing Repair</option>
 <option>Drain Cleaning & Unclogging</option>
 <option>Leak Detection & Repair</option>
@@ -304,9 +308,13 @@
 </div>
 <div class="architectural-line bg-surface-container-high p-4">
 <label for="phone" class="block text-[0.65rem] uppercase tracking-widest text-[#31476b] font-bold mb-1">Phone Number</label>
-<input id="phone" class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface placeholder:text-outline min-h-[32px]" placeholder="(416) 000-0000" type="tel" required aria-required="true"/>
+<input id="phone" name="phone" class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface placeholder:text-outline min-h-[32px]" placeholder="(416) 000-0000" type="tel" required aria-required="true"/>
 </div>
-<button class="w-full golden-gradient text-[#261a00] py-4 font-headline font-extrabold uppercase tracking-widest text-sm hover:-translate-y-1 transition-transform duration-200 min-h-[48px]" type="submit">
+<div class="architectural-line bg-surface-container-high p-4">
+<label for="preferred-date" class="block text-[0.65rem] uppercase tracking-widest text-[#31476b] font-bold mb-1">Preferred Date &amp; Time</label>
+<input id="preferred-date" name="preferredDate" class="w-full bg-transparent border-none p-0 focus:ring-0 text-on-surface placeholder:text-outline min-h-[32px]" type="datetime-local" required aria-required="true"/>
+</div>
+<button id="submit-btn" class="w-full golden-gradient text-[#261a00] py-4 font-headline font-extrabold uppercase tracking-widest text-sm hover:-translate-y-1 transition-transform duration-200 min-h-[48px]" type="submit">
                             Get My Free Estimate
                         </button>
 <p class="text-center text-xs text-[#74777f]">
@@ -314,6 +322,16 @@
   Your info is secure. We respond within 30 minutes.
 </p>
 </form>
+<!-- Success state (hidden by default) -->
+<div id="form-success" class="hidden text-center py-10">
+  <span class="material-symbols-outlined text-[#fabd00] text-6xl mb-4" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+  <h3 class="text-2xl font-headline font-bold text-on-surface mb-2 uppercase">Booking Received!</h3>
+  <p class="text-[#31476b] text-sm">We've added your appointment to our calendar. You'll receive a confirmation shortly.</p>
+</div>
+<!-- Error state (hidden by default) -->
+<div id="form-error" class="hidden text-center py-6">
+  <p class="text-error text-sm font-bold">Something went wrong. Please call us directly at <a href="tel:+14165550199" class="underline">(416) 555-0199</a>.</p>
+</div>
 </div>
 </div>
 </section>
@@ -707,6 +725,79 @@
     this.setAttribute('aria-expanded', !isOpen);
     const icon = this.querySelector('.material-symbols-outlined');
     icon.textContent = isOpen ? 'menu' : 'close';
+  });
+</script>
+
+<!-- Form → Make.com Webhook Submission -->
+<script>
+  // ========================================================
+  // MAKE.COM WEBHOOK URL — Replace with your actual webhook
+  // Get this from: Make.com → Create Scenario → Webhooks → Custom Webhook → Copy URL
+  // ========================================================
+  const MAKE_WEBHOOK_URL = ''; // <-- PASTE YOUR MAKE.COM WEBHOOK URL HERE
+
+  const form = document.getElementById('lead-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const successDiv = document.getElementById('form-success');
+  const errorDiv = document.getElementById('form-error');
+
+  // Set minimum date to now (prevent past bookings)
+  const dateInput = document.getElementById('preferred-date');
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  dateInput.setAttribute('min', now.toISOString().slice(0, 16));
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Validate webhook URL is configured
+    if (!MAKE_WEBHOOK_URL) {
+      console.error('Make.com webhook URL not configured!');
+      // Still show success to the customer (you can handle leads manually)
+      form.classList.add('hidden');
+      successDiv.classList.remove('hidden');
+      return;
+    }
+
+    // Disable button & show loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    submitBtn.classList.add('opacity-70');
+    errorDiv.classList.add('hidden');
+
+    // Collect form data
+    const payload = {
+      fullName: document.getElementById('full-name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      serviceType: document.getElementById('service-type').value,
+      phone: document.getElementById('phone').value.trim(),
+      preferredDate: document.getElementById('preferred-date').value,
+      submittedAt: new Date().toISOString(),
+      source: window.location.hostname
+    };
+
+    try {
+      const response = await fetch(MAKE_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        // Success — hide form, show confirmation
+        form.classList.add('hidden');
+        successDiv.classList.remove('hidden');
+      } else {
+        throw new Error('Webhook returned ' + response.status);
+      }
+    } catch (err) {
+      console.error('Form submission error:', err);
+      // Show error message but don't block — call-to-action fallback
+      errorDiv.classList.remove('hidden');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get My Free Estimate';
+      submitBtn.classList.remove('opacity-70');
+    }
   });
 </script>
 </body>

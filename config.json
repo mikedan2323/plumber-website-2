@@ -14,6 +14,8 @@
     "tel": "+14162867511"
   },
   "email": "info@bradshawplumbing.com",
+  "webhookUrl": "",
+  "ownerPhone": "",
 
   "location": {
     "metroArea": "GTA",
@@ -65,6 +67,14 @@
         "icon": "plumbing",
         "title": "Residential Plumbing Service",
         "description": "Tap installations, toilet maintenance, pipe repairs, and complete remodelling projects — done right the first time.",
+        "details": [
+          "Full tap & faucet installation and cartridge replacement",
+          "Toilet repair, rebuild, and new installations",
+          "Copper, PVC, and PEX pipe repair & re-piping",
+          "Shut-off valve replacement and pressure balancing",
+          "Garbage disposal installation and dishwasher hookups",
+          "Whole-home plumbing inspections with written report"
+        ],
         "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBuSOrwB6MTrXeiACt-yRS3hL6FMnI6kFiL_o50xYE33HO52128cUrSXiuuLTJ5yWH56nOO3rJmylMjeoTvY1xkiIC9AzJ6eXyUyuAWcCTxZeIGuteFLKZuVTYv8mzpSeBg9xF3XTwL1TtBkqDG8bQazVwSLRXj8KRKIxTVX2kh5WTilS9NwgWhe22vsA8ep0NW97AgAvtwn_1eorT3b2v4RceKtSfaqioYPB1K-G6SK8cZaFSCbANpwyTabRyYAy9ZF7SZgzfRPmE",
         "imageAlt": "Residential plumbing repair and installation service",
         "linkText": "Learn More",
@@ -74,6 +84,14 @@
         "icon": "bathroom",
         "title": "Bathroom Renovations",
         "description": "From design consultation to final installation — showers, vanities, tubs, and fixtures from top brands in our showroom.",
+        "details": [
+          "Full bathroom gut and rebuild from structural framing",
+          "Tile installation — floors, walls, and custom shower surrounds",
+          "Vanity, sink, and faucet supply & installation",
+          "Walk-in shower and soaker tub conversions",
+          "In-floor radiant heating rough-in",
+          "Showroom access at 12 Old Kingston Rd — no markup surprises"
+        ],
         "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDWQPid2vkWW-vmjmvevb04oCfdbdRV_jr3KwSx2icBmvJPHF7T4vtVulHXwI8L4BbKjbdxFMSJtxCzW3cKuKeaqtnZU3aZzWZu6onVATW3zVC8EajI6fhZ25geZCCXiXsyS9ifo2zYZA-0HAAA-BW3yg0ZxgYQ4H77OxTRMz21xTxIB14-lAJilxrBswraKn7YSBqWcyaZojSNKYGOXppD1JhOM6dWFSxUlXPSlTtGHbvWl4VqjZEj6ZXcHMJDm65DhOeEQKDLQ2g",
         "imageAlt": "Complete bathroom renovation and design services",
         "linkText": "Learn More",
@@ -83,6 +101,14 @@
         "icon": "emergency",
         "title": "24/7 Emergency Plumbing",
         "description": "Burst pipes, flooding, or sewer backup? Our radio-dispatched trucks are stocked and ready to respond any hour, any day.",
+        "details": [
+          "Burst and frozen pipe repair — same day, any hour",
+          "Sewer backup and drain flooding response",
+          "Water heater failure and emergency replacement",
+          "Gas line leak detection and shut-off",
+          "Sump pump failure and basement flood control",
+          "Radio-dispatched trucks stocked with common parts on board"
+        ],
         "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCRAYj6MWqbIoRHlooD3bS2ma4JlIWFsmE3uxtpLNa6HU9Nbm1cgpyprCc2QdWGw291J41Y0lHFNKwUNgRSOni1Zx3rMCSbFZCc96wzqOXo8qos5gcwsrRdQYOvq0HipBJCNUFzEAt5flzoIyQawHSiADchvHq0gsC_2Zl0N3z9v79N0MFMkkNvduxXQrr_ZSGM1Vs8nCiNa1HZJiXFX4tybG4iR4VQbB-qyyqSeHh6vMoM3ekyuDWOS4VEosqpM8keJmu3Dw1z3yo",
         "imageAlt": "24/7 emergency plumbing service",
         "linkText": "Call Now",
