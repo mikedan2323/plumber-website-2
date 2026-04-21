@@ -57,8 +57,7 @@
     { "icon": "verified_user", "label": "FULLY LICENSED & INSURED" },
     { "icon": "workspace_premium", "label": "HOMESTARS VERIFIED" },
     { "icon": "construction", "label": "WSIB COVERED" },
-    { "icon": "shield_with_heart", "label": "SINCE 1989" },
-    { "icon": "store", "label": "SHOWROOM AT 12 OLD KINGSTON RD" }
+    { "icon": "shield_with_heart", "label": "SINCE 1989" }
   ],
 
   "services": {
