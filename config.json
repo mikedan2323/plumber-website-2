@@ -1,0 +1,223 @@
+{
+  "companyName": "Bradshaw Plumbing",
+  "legalName": "Bradshaw Plumbing & Heating Inc.",
+  "domain": "bradshawplumbing.com",
+  "tagline": "Scarborough's <span class=\"text-primary-fixed-dim\">Trusted</span> Plumbing Experts.",
+  "taglinePlain": "Scarborough's Trusted Plumbing Experts.",
+  "heroSubBadge": "Serving The GTA Since 1989",
+  "heroDescription": "From emergency repairs to full bathroom renovations, Bradshaw Plumbing delivers professional, reliable service backed by over 35 years of experience. 24/7 emergency plumbing — fully licensed, certified, and insured.",
+  "footerDescription": "Scarborough & GTA's trusted plumbing and renovation experts. Fully licensed, WSIB covered, and available around the clock for over 35 years.",
+  "footerTagline": "SCARBOROUGH'S #1 PLUMBING & RENOVATION TEAM",
+
+  "phone": {
+    "display": "(416) 286-7511",
+    "tel": "+14162867511"
+  },
+  "email": "info@bradshawplumbing.com",
+
+  "location": {
+    "metroArea": "GTA",
+    "metroAreaFull": "Greater Toronto Area",
+    "city": "Scarborough",
+    "region": "ON",
+    "country": "CA"
+  },
+
+  "stats": {
+    "yearsInBusiness": "35yr+",
+    "yearsLabel": "Industry Experience",
+    "reviewCount": "100+",
+    "reviewCountNumber": 100,
+    "averageRating": "4.3",
+    "responseTime": "90 minutes"
+  },
+
+  "serviceAreas": [
+    "SCARBOROUGH",
+    "TORONTO",
+    "PICKERING",
+    "MARKHAM",
+    "NORTH YORK",
+    "ETOBICOKE",
+    "AJAX",
+    "WHITBY",
+    "OSHAWA",
+    "RICHMOND HILL",
+    "VAUGHAN",
+    "MISSISSAUGA",
+    "BRAMPTON",
+    "OAKVILLE",
+    "EAST YORK"
+  ],
+  "schemaAreaServed": ["Scarborough", "Toronto", "Pickering", "Markham", "North York", "Etobicoke", "Ajax", "Whitby", "Oshawa", "Richmond Hill"],
+
+  "trustBadges": [
+    { "icon": "verified_user", "label": "FULLY LICENSED & INSURED" },
+    { "icon": "workspace_premium", "label": "HOMESTARS VERIFIED" },
+    { "icon": "construction", "label": "WSIB COVERED" },
+    { "icon": "shield_with_heart", "label": "SINCE 1989" },
+    { "icon": "store", "label": "SHOWROOM AT 12 OLD KINGSTON RD" }
+  ],
+
+  "services": {
+    "primary": [
+      {
+        "icon": "plumbing",
+        "title": "Residential Plumbing Service",
+        "description": "Tap installations, toilet maintenance, pipe repairs, and complete remodelling projects — done right the first time.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBuSOrwB6MTrXeiACt-yRS3hL6FMnI6kFiL_o50xYE33HO52128cUrSXiuuLTJ5yWH56nOO3rJmylMjeoTvY1xkiIC9AzJ6eXyUyuAWcCTxZeIGuteFLKZuVTYv8mzpSeBg9xF3XTwL1TtBkqDG8bQazVwSLRXj8KRKIxTVX2kh5WTilS9NwgWhe22vsA8ep0NW97AgAvtwn_1eorT3b2v4RceKtSfaqioYPB1K-G6SK8cZaFSCbANpwyTabRyYAy9ZF7SZgzfRPmE",
+        "imageAlt": "Residential plumbing repair and installation service",
+        "linkText": "Learn More",
+        "linkHref": "#contact"
+      },
+      {
+        "icon": "bathroom",
+        "title": "Bathroom Renovations",
+        "description": "From design consultation to final installation — showers, vanities, tubs, and fixtures from top brands in our showroom.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDWQPid2vkWW-vmjmvevb04oCfdbdRV_jr3KwSx2icBmvJPHF7T4vtVulHXwI8L4BbKjbdxFMSJtxCzW3cKuKeaqtnZU3aZzWZu6onVATW3zVC8EajI6fhZ25geZCCXiXsyS9ifo2zYZA-0HAAA-BW3yg0ZxgYQ4H77OxTRMz21xTxIB14-lAJilxrBswraKn7YSBqWcyaZojSNKYGOXppD1JhOM6dWFSxUlXPSlTtGHbvWl4VqjZEj6ZXcHMJDm65DhOeEQKDLQ2g",
+        "imageAlt": "Complete bathroom renovation and design services",
+        "linkText": "Learn More",
+        "linkHref": "#contact"
+      },
+      {
+        "icon": "emergency",
+        "title": "24/7 Emergency Plumbing",
+        "description": "Burst pipes, flooding, or sewer backup? Our radio-dispatched trucks are stocked and ready to respond any hour, any day.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCRAYj6MWqbIoRHlooD3bS2ma4JlIWFsmE3uxtpLNa6HU9Nbm1cgpyprCc2QdWGw291J41Y0lHFNKwUNgRSOni1Zx3rMCSbFZCc96wzqOXo8qos5gcwsrRdQYOvq0HipBJCNUFzEAt5flzoIyQawHSiADchvHq0gsC_2Zl0N3z9v79N0MFMkkNvduxXQrr_ZSGM1Vs8nCiNa1HZJiXFX4tybG4iR4VQbB-qyyqSeHh6vMoM3ekyuDWOS4VEosqpM8keJmu3Dw1z3yo",
+        "imageAlt": "24/7 emergency plumbing service",
+        "linkText": "Call Now",
+        "linkHref": "tel:{{PHONE_TEL}}"
+      }
+    ],
+    "secondary": [
+      { "icon": "countertops", "title": "Kitchen Renovations" },
+      { "icon": "water_heater", "title": "Water Heaters" },
+      { "icon": "valve", "title": "Backwater Valves" },
+      { "icon": "water_damage", "title": "Leak Detection" }
+    ],
+    "formOptions": [
+      "Emergency Plumbing Repair",
+      "Bathroom Renovation",
+      "Kitchen Renovation",
+      "Drain Cleaning & Unclogging",
+      "Tap & Faucet Repair",
+      "Toilet Repair/Installation",
+      "Water Heater Service",
+      "Other — Describe Below"
+    ]
+  },
+
+  "reviews": [
+    {
+      "initials": "DS",
+      "name": "Diana S.",
+      "location": "Scarborough, ON",
+      "stars": 5,
+      "text": "Had to get 2 faucet cartridges and faucets replaced and flusher handle on toilet. Anson our serviceman was awesome — very efficient and explained everything in detail.",
+      "date": "11 months ago"
+    },
+    {
+      "initials": "RN",
+      "name": "Rob N.",
+      "location": "GTA",
+      "stars": 5,
+      "text": "Quick and excellent service, had exactly what I needed. Thanks Bradshaw!",
+      "date": "1 year ago"
+    },
+    {
+      "initials": "AH",
+      "name": "Ahmad",
+      "location": "GTA",
+      "stars": 5,
+      "text": "Spoke to a gentleman over the phone regarding plumbing work. They sound like reliable, honest and good people. I would recommend them.",
+      "date": "11 months ago"
+    },
+    {
+      "initials": "RA",
+      "name": "Ray A.",
+      "location": "Scarborough, ON",
+      "stars": 5,
+      "text": "Great place and very helpful. They were able to provide the right piece that I needed. And even gave me helpful tips to ensure it didn't leak. I will come back here again.",
+      "date": "3 months ago"
+    },
+    {
+      "initials": "ET",
+      "name": "Elsa T.",
+      "location": "Toronto, ON",
+      "stars": 5,
+      "text": "My taps had been leaking for a long time and were totally corroded. I wondered how they would ever get them removed. The plumber Todd arrived — courteous, efficient, and got the job done with no mess left behind!",
+      "date": "2 months ago"
+    },
+    {
+      "initials": "NM",
+      "name": "Nick M.",
+      "location": "Scarborough, ON",
+      "stars": 5,
+      "text": "I have gone to their store front on several occasions to get products and advice on do-it-myself repairs. The staff has always been really helpful and more than willing to give me pointers. Thanks!",
+      "date": "1 month ago"
+    }
+  ],
+  "googleReviewsUrl": "https://www.google.com/maps/place/Bradshaw+Plumbing+%26+Bathroom+Renovations+Toronto/data=!4m2!3m1!1s0x89d4da6228c0263b:0x3699b7d1eda7bc2b",
+
+  "guarantees": [
+    {
+      "icon": "schedule",
+      "title": "24/7 Emergency Service",
+      "description": "Plumbing emergencies don't wait. Our team is ready any hour, any day — radio dispatched for fast response."
+    },
+    {
+      "icon": "request_quote",
+      "title": "Free Estimates",
+      "description": "Get a no-obligation quote for all plumbing, bathroom fixtures, and renovation needs before work begins."
+    },
+    {
+      "icon": "workspace_premium",
+      "title": "25+ Years Experience",
+      "description": "Scarborough & GTA's trusted plumbing experts since 1989. Fully qualified, certified, and insured technicians."
+    },
+    {
+      "icon": "storefront",
+      "title": "Bathroom Showroom",
+      "description": "Visit our retail showroom at 12 Old Kingston Road for fixtures, vanities, and design consultations."
+    }
+  ],
+
+  "promotion": {
+    "headline": "Ready for a Bathroom Upgrade?",
+    "description": "Book a free design consultation and receive an immediate credit toward your bathroom renovation project. Visit our showroom or call today.",
+    "label": "New Customer Special",
+    "amount": "$75 OFF",
+    "detail": "YOUR FIRST SERVICE CALL"
+  },
+
+  "images": {
+    "logo": "https://www.bradshawplumbing.com/wp-content/uploads/2017/09/logo.png",
+    "heroBackground": "https://lh3.googleusercontent.com/aida-public/AB6AXuCxN_rIexSBNxApdl0emiZggbgogN4txwOsmC3zyHOkfMSybPhyWkBW6Ayzvje-PZKFP5gHUUXHYRspL6qqW_m0AXm_C3mikRYbSoqoQ6hqRcRGvRs37WEgGpGw-jy-Hz1CZMwoARzKhefS86iQkzpPbbw82YRHgFXkD2oYbH3znDlxe7pEhBMsiRDpw1bdHRr1362-3fI1zah7ctVWM3C74zQ1aMUmLkV51U1HFm80_7yn2dV7Yuje5xHwc1xocRLary6jE5jKPWw",
+    "mapImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuCvFu-VNmegz9Sz6dNqm-X9urnQnT-mM8iZid3CAjnJd1o0gxICsknCTDA69o2fjBu0oRWho04k5anYGigu80rAMgzN4U2E_F36J1ovPeGoZ1uU1m2LKAxASqfhzc6sdtVp4F6De34qZ2Jy3GXyNCcrp4I18JhNiflxV2SequgSiKxbKwRl2EbZPgMLHQS6tK8_80fVCXKZpE4Es23kahtBo81qHYl0VY96OxX-7SbwkkjB7lXOuChsvzv0YS8N3iSz0XxhrXSmT40"
+  },
+
+  "colors": {
+    "primaryAccent": "#c62828",
+    "primaryDark": "#8e0000",
+    "navy": "#1a1a2e",
+    "surface": "#fafafa",
+    "textPrimary": "#37474f",
+    "textSecondary": "#455a64",
+    "textMuted": "#78909c"
+  },
+
+  "fonts": {
+    "headline": "Poppins",
+    "body": "Inter"
+  },
+
+  "socialLinks": [
+    { "type": "share", "url": "https://www.facebook.com/bradshawplumbingtoronto", "label": "Facebook" },
+    { "type": "email", "url": "mailto:{{EMAIL}}", "label": "Email us" },
+    { "type": "phone", "url": "tel:{{PHONE_TEL}}", "label": "Call us" }
+  ],
+
+  "copyright": {
+    "year": "2026"
+  }
+}
